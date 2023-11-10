@@ -7,9 +7,6 @@ package Ch14;
  * @author Matthew Molnar, Nguyen Pham
  * Created on: Nov 10, 2023
  * Last Modified: Nov 10, 2023
- * @author Christopher Williams
- * Created on: Apr 12, 2017
- * Last Modified: Apr 15, 201
  * Description:  
  */
 
