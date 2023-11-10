@@ -3,16 +3,20 @@ package Ch14;
 /**
  * File: csci1302/ch16/MileageCalculator.java
  * Package: ch16
- * @author Christopher Williams
- * Created on: Apr 12, 2017
- * Last Modified: Apr 15, 2019
+ * @author Matthew Molnar, Nguyen Pham
+ * Created on: Nov 10, 2023
+ * Last Modified: Nov 10, 2023
  * Description:  
  */
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
@@ -47,6 +51,10 @@ public class MileageCalculatorNoConversion extends Application {
     
    private RadioButton rbMPG = new RadioButton(defaultResult);
    private RadioButton rbKPL = new RadioButton(altResult);
+   
+   ObservableList<String> items = FXCollections.observableArrayList(defaultResult, altResult);
+   ComboBox<String> cmb1 = new ComboBox<>(items);
+   
    private ToggleGroup tgConv = new ToggleGroup();
     
    private GridPane mainPane = new GridPane();
@@ -55,6 +63,11 @@ public class MileageCalculatorNoConversion extends Application {
     	// set toggle group for RadioButtons
       rbMPG.setToggleGroup(tgConv);
       rbKPL.setToggleGroup(tgConv);
+ 
+      
+      lblCapacity.setText(altCapacity);
+      lblDistance.setText(altMileage);
+      lblResult.setText(altResult);
     	
         // set preferences for UI components
       tfDistance.setMaxWidth(txtWidth);
@@ -70,8 +83,7 @@ public class MileageCalculatorNoConversion extends Application {
         
         // add items to mainPane
       mainPane.add(lblEffType, 0, 0);
-      mainPane.add(rbMPG, 0, 1);
-      mainPane.add(rbKPL, 1, 1);
+      mainPane.add(cmb1, 0, 1);
       mainPane.add(lblDistance, 0, 2);
       mainPane.add(tfDistance, 1, 2);
       mainPane.add(lblCapacity, 0, 3);
@@ -87,7 +99,8 @@ public class MileageCalculatorNoConversion extends Application {
       tfCapacity.setOnAction(e -> calcMileage());
       tfResult.setOnAction(e -> calcMileage());
       rbKPL.setOnAction(e -> changeLabels());
-      rbMPG.setOnAction(e -> changeLabels());     
+      rbMPG.setOnAction(e -> changeLabels());
+      cmb1.setOnAction(e -> changeLabels());     
       btnReset.setOnAction(e -> resetForm());
         
         // create a scene and place it in the stage
@@ -101,15 +114,15 @@ public class MileageCalculatorNoConversion extends Application {
         // stick default focus in first field for usability
       tfDistance.requestFocus();
    }
-    
-    /**
+
+	/**
      * Convert existing figures and recalculate
      * This needs to be separate to avoid converting when
      * the conversion is not necessary
      */
    private void changeLabels() {
     	// distinguish between L/100KM and MPG
-      if (rbKPL.isSelected() && lblCapacity.getText().equals(defaultCapacity)) {
+      if (lblCapacity.getText().equals(defaultCapacity)) {
         	// update labels
          lblCapacity.setText(altCapacity);
          lblDistance.setText(altMileage);
@@ -170,4 +183,5 @@ public class MileageCalculatorNoConversion extends Application {
    }
 
 }
+
 
